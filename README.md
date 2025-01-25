@@ -1,2 +1,2 @@
-# CIS120
+# CIS260
 CIS260 Project
