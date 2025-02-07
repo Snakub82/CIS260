@@ -1,0 +1,32 @@
+function moveDataToSharePoint() {
+  // Define the URL of your SharePoint site
+  var sharePointUrl = 'https://your-sharepoint-site-url';
+
+  // Define the credentials for SharePoint
+  var username = 'your-username';
+  var password = 'your-password';
+
+  // Connect to SharePoint using CData Connect Cloud
+  var connection = new ActiveXObject('CData.SQLGateway.SharePoint');
+  connection.Open(sharePointUrl, username, password);
+
+  // Read data from Google Sheets
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+
+  // Move data to SharePoint
+  for (var i = 1; i < data.length; i++) {
+    var rowData = data[i];
+    var listName = 'YourListName'; // Replace with your SharePoint list name
+    var itemProperties = {
+      'Title': rowData[0],
+      'Description': rowData[1]
+      // Add more fields as needed
+    };
+    connection.Update(listName, itemProperties);
+  }
+
+  // Close the connection
+  connection.Close();
+}
+
