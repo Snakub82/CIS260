@@ -3,8 +3,8 @@ function moveDataToSharePoint() {
   var sharePointUrl = 'https://your-sharepoint-site-url';
 
   // Define the credentials for SharePoint
-  var username = 'your-username';
-  var password = 'your-password';
+  var username = 'jacobakrist1@gmail.com';
+  var password = 'Jeep4tooo!';
 
   // Connect to SharePoint using CData Connect Cloud
   var connection = new ActiveXObject('CData.SQLGateway.SharePoint');
@@ -19,8 +19,8 @@ function moveDataToSharePoint() {
     var rowData = data[i];
     var listName = 'YourListName'; // Replace with your SharePoint list name
     var itemProperties = {
-      'Title': rowData[0],
-      'Description': rowData[1]
+      'Feed': rowData[0],
+      'Program': rowData[1]
       // Add more fields as needed
     };
     connection.Update(listName, itemProperties);
