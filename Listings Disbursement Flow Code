@@ -1,0 +1,61 @@
+#When item is created#
+
+{
+  "type": "OpenApiConnection",
+  "inputs": {
+    "parameters": {
+      "dataset": "https://weigelbc.sharepoint.com/sites/LocalProgrammingListings",
+      "table": "4a09bbfe-e0c0-453e-89a0-a9e69f1921ef"
+    },
+    "host": {
+      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+      "connection": "shared_sharepointonline",
+      "operationId": "GetOnNewItems"
+    }
+  },
+  "recurrence": {
+    "frequency": "Minute",
+    "interval": 1,
+    "startTime": null,
+    "timeZone": null
+  },
+  "splitOn": "@triggerOutputs()?['body/value']"
+}
+
+#Local Email Connection#
+
+{
+  "type": "OpenApiConnection",
+  "inputs": {
+    "host": {
+      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+      "connection": "shared_office365users",
+      "operationId": "MyProfile_V2"
+    }
+  },
+  "runAfter": {}
+}
+
+#Send Email#
+
+{
+  "type": "OpenApiConnection",
+  "inputs": {
+    "parameters": {
+      "emailMessage/To": "jkrist@wciu.com",
+      "emailMessage/Subject": "New SharePoint Item Added",
+      "emailMessage/Body": "A new item has been added to SharePoint. Please check it out."
+    },
+    "host": {
+      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+      "connection": "shared_office365",
+      "operationId": "SendEmailV2"
+    }
+  },
+  "runAfter": {
+    "Get_my_profile": [
+      "Succeeded"
+    ]
+  }
+}
+ 
